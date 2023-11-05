@@ -103,6 +103,11 @@ export class UserSubjectService {
             : this.calculateFinal(userSubject.value),
       };
     });
+    result.promediate = this.getPromediate(
+      existUser.userSubjects.filter((userSubject) => {
+        return userSubject.status === StatusSubject.FINISHED;
+      })
+    );
     return result;
   }
 
@@ -127,6 +132,14 @@ export class UserSubjectService {
         };
       });
     return result;
+  }
+
+  private getPromediate(userSubjects: UserSubject[]): number {
+    let promediate = 0;
+    userSubjects.forEach((userSubject) => {
+      promediate += userSubject.value;
+    });
+    return promediate / userSubjects.length;
   }
 
   private calculateFinal(value: number): string {
