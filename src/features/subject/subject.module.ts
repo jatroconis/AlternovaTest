@@ -11,5 +11,6 @@ import { UserModule } from "../user/user.module";
   imports: [TypeOrmModule.forFeature([Subject]), UserModule],
   providers: [SubjectProfile, SubjectMapper, SubjectService],
   controllers: [SubjectController],
+  exports: [SubjectService, SubjectMapper],
 })
 export class SubjectModule {}

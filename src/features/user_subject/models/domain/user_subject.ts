@@ -1,4 +1,5 @@
 import { AutoMap } from "@automapper/classes";
+import { StatusSubject } from "src/core/utilities/status";
 import { Subject } from "src/features/subject/models/domain/subject";
 import { User } from "src/features/user/models/domain/user";
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
@@ -14,6 +15,9 @@ export class UserSubject {
     createForeignKeyConstraints: true,
   })
   user: User;
+
+  @Column({ type: "enum", enum: StatusSubject, default: StatusSubject.CURRENT })
+  status: StatusSubject;
 
   @ManyToOne(() => Subject, {
     nullable: false,

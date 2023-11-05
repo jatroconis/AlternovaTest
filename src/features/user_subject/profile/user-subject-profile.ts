@@ -19,6 +19,14 @@ export class UserSubjectProfile extends AutomapperProfile {
         forMember(
           (destination) => destination.userSubjectId,
           mapFrom((source) => source.id)
+        ),
+        forMember(
+          (destination) => destination.user,
+          mapFrom((source) => source.user)
+        ),
+        forMember(
+          (destination) => destination.subject,
+          mapFrom((source) => source.subject)
         )
       ),
         createMap(
@@ -30,12 +38,12 @@ export class UserSubjectProfile extends AutomapperProfile {
             mapFrom((source) => source.userSubjectId)
           ),
           forMember(
-            (destination) => destination.user.id,
-            mapFrom((source) => source.user.id)
+            (destination) => destination.user,
+            mapFrom((source) => source.user)
           ),
           forMember(
-            (destination) => destination.subject.id,
-            mapFrom((source) => source.subject.id)
+            (destination) => destination.subject,
+            mapFrom((source) => source.subject)
           )
         );
     };

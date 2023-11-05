@@ -1,4 +1,4 @@
-import { createMap, Mapper } from "@automapper/core";
+import { createMap, forMember, mapFrom, Mapper } from "@automapper/core";
 import { AutomapperProfile, InjectMapper } from "@automapper/nestjs";
 import { Injectable } from "@nestjs/common";
 import { Subject } from "../models/domain/subject";
@@ -15,12 +15,20 @@ export class SubjectProfile extends AutomapperProfile {
       createMap(
         mapper,
         Subject,
-        SubjectDto
+        SubjectDto,
+        forMember(
+          (destination) => destination.subjectId,
+          mapFrom((source) => source.id)
+        )
       ),
         createMap(
           mapper,
           SubjectDto,
-          Subject
+          Subject,
+          forMember(
+            (destination) => destination.id,
+            mapFrom((source) => source.subjectId)
+          )
         );
     };
   }

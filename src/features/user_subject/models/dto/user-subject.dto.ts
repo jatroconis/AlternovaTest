@@ -12,4 +12,6 @@ export class UserSubjectDto {
   user?: User;
   @ApiProperty({ type: () => Subject })
   subject?: Subject;
+  @ApiProperty({ type: Number })
+  value: number;
 }

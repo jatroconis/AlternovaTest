@@ -16,7 +16,7 @@ import { UserMapper } from "../profile/user-mapper";
 export class UserService implements CrudService<UserDto> {
   constructor(
     @InjectRepository(User) private readonly userRepository: Repository<User>,
-    private readonly userMapper: UserMapper,
+    private readonly userMapper: UserMapper
   ) {}
 
   async save(objectDto: UserDto): Promise<UserDto> {
@@ -25,7 +25,7 @@ export class UserService implements CrudService<UserDto> {
     });
     if (!!existsByEmail) throw new HttpException(REPEAT.reason, REPEAT.status);
     const user = await this.userRepository.save(
-      this.userMapper.toDomain(objectDto),
+      this.userMapper.toDomain(objectDto)
     );
     return this.userMapper.toDto(user);
   }
@@ -34,7 +34,7 @@ export class UserService implements CrudService<UserDto> {
     const exists = await this.findById(objectDto.userId);
     if (!exists) throw new HttpException(NOT_FOUND.reason, NOT_FOUND.status);
     const user = await this.userRepository.save(
-      this.userMapper.toDomain(objectDto),
+      this.userMapper.toDomain(objectDto)
     );
     return this.userMapper.toDto(user);
   }
@@ -43,6 +43,14 @@ export class UserService implements CrudService<UserDto> {
     return this.userMapper.asyncArrayDto(await this.userRepository.find());
   }
 
+  async findUserWithSubjectsByUserId(userId: number): Promise<User> {
+    const user = await this.userRepository.findOne({
+      relations: { userSubjects: { subject: true } },
+      where: { id: userId },
+    });
+    if (!user) throw new HttpException(NOT_FOUND.reason, NOT_FOUND.status);
+    return user;
+  }
   async findById(objectId: number): Promise<UserDto> {
     const user = await this.userRepository.findOneBy({ id: objectId });
     if (!user) throw new HttpException(NOT_FOUND.reason, NOT_FOUND.status);
@@ -51,7 +59,7 @@ export class UserService implements CrudService<UserDto> {
 
   async findByName(fullname: string): Promise<UserDto> {
     return this.userMapper.asyncToDto(
-      await this.userRepository.findOneBy({ fullname }),
+      await this.userRepository.findOneBy({ fullname })
     );
   }
 
@@ -64,7 +72,7 @@ export class UserService implements CrudService<UserDto> {
 
   async findByEmailAndPassword(
     email: string,
-    password: string,
+    password: string
   ): Promise<UserDto> {
     const user = await this.userRepository.findOneBy({ email });
     if (!user) throw new HttpException(NOT_FOUND.reason, NOT_FOUND.status);
@@ -76,7 +84,7 @@ export class UserService implements CrudService<UserDto> {
 
   async findByEmail(email: string): Promise<UserDto> | null {
     return this.userMapper.asyncToDto(
-      await this.userRepository.findOneBy({ email }),
+      await this.userRepository.findOneBy({ email })
     );
   }
 }

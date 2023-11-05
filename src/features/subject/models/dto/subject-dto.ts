@@ -10,8 +10,8 @@ export class SubjectDto {
   title: string;
   @AutoMap()
   @ApiProperty({ type: String })
-  message: string;
-  // @AutoMap(() => UserDto)
-  // @ApiProperty({ type: () => UserDto })
-  // user: UserDto;
+  description: string;
+  @AutoMap()
+  @ApiProperty({ type: Date })
+  createdDate: Date;
 }

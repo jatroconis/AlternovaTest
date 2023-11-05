@@ -20,6 +20,6 @@ export class Subject {
     default: () => "CURRENT_TIMESTAMP",
   })
   createdDate: Date;
-  @OneToMany(() => UserSubject, (userSubject) => userSubject.id)
+  @OneToMany(() => UserSubject, (userSubject) => userSubject.subject)
   userSubjects: UserSubject[];
 }

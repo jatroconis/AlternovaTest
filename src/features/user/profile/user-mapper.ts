@@ -28,4 +28,8 @@ export class UserMapper implements IMapper<User, UserDto> {
   toDto(mapper: User): UserDto {
     return this.mapper.map(mapper, User, UserDto);
   }
+
+  toUserWithSubjectsDto(mapper: User): UserDto {
+    return this.mapper.map(mapper, User, UserDto);
+  }
 }

@@ -20,6 +20,6 @@ export class User {
   @AutoMap()
   @Column({ type: "enum", enum: Status, default: Status.ACTIVE })
   status: Status;
-  @OneToMany(() => UserSubject, (userSubject) => userSubject.id)
+  @OneToMany(() => UserSubject, (userSubject) => userSubject.user)
   userSubjects: UserSubject[];
 }
