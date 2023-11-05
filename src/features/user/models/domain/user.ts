@@ -1,6 +1,7 @@
 import { AutoMap } from "@automapper/classes";
 import { Status } from "src/core/utilities/status";
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { UserSubject } from "src/features/user_subject/models/domain/user_subject";
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity("users")
 export class User {
@@ -19,4 +20,6 @@ export class User {
   @AutoMap()
   @Column({ type: "enum", enum: Status, default: Status.ACTIVE })
   status: Status;
+  @OneToMany(() => UserSubject, (userSubject) => userSubject.id)
+  userSubjects: UserSubject[];
 }

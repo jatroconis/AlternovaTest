@@ -1,5 +1,6 @@
 import { AutoMap } from "@automapper/classes";
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { UserSubject } from "src/features/user_subject/models/domain/user_subject";
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity("subjects")
 export class Subject {
@@ -19,4 +20,6 @@ export class Subject {
     default: () => "CURRENT_TIMESTAMP",
   })
   createdDate: Date;
+  @OneToMany(() => UserSubject, (userSubject) => userSubject.id)
+  userSubjects: UserSubject[];
 }
